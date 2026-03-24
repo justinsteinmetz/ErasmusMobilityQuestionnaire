@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Erasmus+ — Your Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f0e0c;
+  --ink-mid: #3d3b36;
+  --ink-light: #7a7870;
+  --ink-faint: #c8c6be;
+  --paper: #f7f5ef;
+  --white: #ffffff;
+  --gold: #c09a3a;
+  --gold-pale: #f5edd8;
+  --rule: rgba(15,14,12,0.1);
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Playfair Display', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.header {
+  background: var(--ink);
+  padding: 32px 24px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.header-ghost {
+  position: absolute;
+  right: -12px;
+  top: -8px;
+  font-family: var(--serif);
+  font-size: 120px;
+  font-style: italic;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.form-body {
+  padding: 0 0 48px;
+}
+
+.q-block {
+  padding: 28px 24px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--white);
+  margin-bottom: 3px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.q-block:nth-child(1) { animation-delay: 0.05s; }
+.q-block:nth-child(2) { animation-delay: 0.1s; }
+.q-block:nth-child(3) { animation-delay: 0.15s; }
+.q-block:nth-child(4) { animation-delay: 0.2s; }
+.q-block:nth-child(5) { animation-delay: 0.25s; }
+.q-block:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.q-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.q-hint {
+  font-size: 12px;
+  color: var(--ink-light);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  resize: vertical;
+  line-height: 1.6;
+  -webkit-appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(192,154,58,0.12);
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-appearance: none;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(192,154,58,0.12);
+}
+
+.consent-block {
+  padding: 20px 24px;
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  margin: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.consent-block input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--ink);
+}
+
+.consent-block label {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+
+.submit-wrap {
+  padding: 24px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--ink);
+  color: var(--white);
+  border: none;
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+  -webkit-appearance: none;
+}
+
+.btn-submit:hover { background: #2a2a3a; }
+.btn-submit:active { background: #000; }
+
+/* Thank you state */
+.thankyou {
+  display: none;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.thankyou-icon {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.thankyou h2 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.thankyou p {
+  font-size: 14px;
+  color: var(--ink-light);
+  line-height: 1.65;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Email copy panel */
+.copy-panel {
+  display: none;
+  margin: 24px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  padding: 20px;
+}
+
+.copy-panel-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 12px;
+}
+
+.copy-output {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--paper);
+  padding: 14px;
+  border: 1px solid var(--rule);
+  margin-bottom: 12px;
+  font-family: var(--mono);
+}
+
+.btn-copy {
+  width: 100%;
+  padding: 12px;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-ghost">Your words.</div>
+  <div class="header-eyebrow">Erasmus+ · Deutsche Schule Prag</div>
+  <h1>Tell us what you saw.</h1>
+  <p>Five short questions. Your answers help us show other teachers what a mobility actually looks like — in your words, not ours.</p>
+</div>
+
+<form id="quote-form" class="form-body">
+
+  <div class="q-block">
+    <div class="q-num">01</div>
+    <div class="q-text">Which mobility did you go on, and where?</div>
+    <div class="q-hint">e.g. exchange visit with a school in Vienna, 2024</div>
+    <input type="text" id="q1" placeholder="Destination and year">
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">02</div>
+    <div class="q-text">What happened that you didn't expect?</div>
+    <div class="q-hint">A student moment, a shift in the group, something that surprised you — big or small.</div>
+    <textarea id="q2" placeholder="Write freely — this doesn't need to be polished."></textarea>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">03</div>
+    <div class="q-text">What would you tell a colleague who was on the fence about proposing a mobility?</div>
+    <div class="q-hint">The one thing you'd say to someone hesitating.</div>
+    <textarea id="q3" placeholder=""></textarea>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">04</div>
+    <div class="q-text">Was there anything that was harder than you expected — and how did it get resolved?</div>
+    <div class="q-hint">Optional, but the most useful answers for other teachers. Honest is better than reassuring.</div>
+    <textarea id="q4" placeholder="You can leave this blank if nothing comes to mind."></textarea>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">05</div>
+    <div class="q-text">Your name (or initials if you prefer)</div>
+    <div class="q-hint">Used for attribution — e.g. "K.H., Erasmus coordinator" or just your first name.</div>
+    <input type="text" id="q5" placeholder="Name or initials">
+  </div>
+
+  <div class="consent-block">
+    <input type="checkbox" id="consent">
+    <label for="consent">I'm happy for my answers to be used (in whole or edited) on DSP's internal Erasmus+ materials. I understand I can ask to have them removed at any time.</label>
+  </div>
+
+  <div class="submit-wrap">
+    <button type="button" class="btn-submit" onclick="handleSubmit()">Send my answers</button>
+  </div>
+
+</form>
+
+<div class="thankyou" id="thankyou">
+  <div class="thankyou-icon">✦</div>
+  <h2>Thank you.</h2>
+  <p>Your answers will be read by Klára and Justin. They genuinely help.</p>
+</div>
+
+<div class="copy-panel" id="copy-panel">
+  <div class="copy-panel-label">Your responses — tap to copy and send to justin.steinmetz@dsp-Praha.cz</div>
+  <div class="copy-output" id="copy-output"></div>
+  <button class="btn-copy" onclick="copyText()">Copy to clipboard</button>
+</div>
+
+<script>
+function handleSubmit() {
+  const q1 = document.getElementById('q1').value.trim();
+  const q2 = document.getElementById('q2').value.trim();
+  const q3 = document.getElementById('q3').value.trim();
+  const q4 = document.getElementById('q4').value.trim();
+  const q5 = document.getElementById('q5').value.trim();
+  const consent = document.getElementById('consent').checked;
+
+  if (!q2 && !q3) {
+    alert('Please answer at least questions 2 or 3 before submitting.');
+    return;
+  }
+
+  // Build formatted output
+  const lines = [
+    'ERASMUS+ QUOTE QUESTIONNAIRE — DSP',
+    '─────────────────────────────',
+    '',
+    q1 ? `Mobility: ${q1}` : '',
+    '',
+    q2 ? `Q2 — What happened that you didn't expect?\n${q2}` : '',
+    '',
+    q3 ? `Q3 — What would you tell a colleague on the fence?\n${q3}` : '',
+    '',
+    q4 ? `Q4 — What was harder than expected?\n${q4}` : '',
+    '',
+    q5 ? `Name: ${q5}` : 'Anonymous',
+    consent ? 'Consent: Given' : 'Consent: Not given',
+  ].filter(l => l !== null).join('\n');
+
+  document.getElementById('copy-output').textContent = lines;
+
+  // Hide form, show thank you + copy panel
+  document.getElementById('quote-form').style.display = 'none';
+  document.getElementById('thankyou').style.display = 'block';
+  document.getElementById('copy-panel').style.display = 'block';
+
+  // Also try mailto
+  const subject = encodeURIComponent('Erasmus+ quote — ' + (q5 || 'anonymous'));
+  const body = encodeURIComponent(lines);
+  const email = ['justin.steinmetz', 'dsp-praha.cz'].join('@');
+  setTimeout(() => {
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  }, 800);
+}
+
+function copyText() {
+  const text = document.getElementById('copy-output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = 'Copy to clipboard', 2000);
+  }).catch(() => {
+    // Fallback for older iOS
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = 'Copy to clipboard', 2000);
+  });
+}
+</script>
+</body>
+</html>
