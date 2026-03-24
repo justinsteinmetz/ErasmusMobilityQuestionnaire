@@ -132,23 +132,6 @@ button{
  text-transform:uppercase;
  font-size:14px;
  cursor:pointer;
- transition:.15s;
-}
-
-button.sending{
- background:#2a2a2a;
-}
-
-button:disabled{
- opacity:.6;
- cursor:default;
-}
-
-.status{
- padding:16px 24px;
- font-size:13px;
- display:none;
- color:#b00020;
 }
 
 .thankyou{
@@ -163,10 +146,6 @@ button:disabled{
  font-size:26px;
  margin-bottom:12px;
 }
-
-@media (prefers-reduced-motion: reduce){
- *{animation:none!important;transition:none!important;}
-}
 </style>
 </head>
 <body>
@@ -180,140 +159,51 @@ button:disabled{
 <p>Your reflections help colleagues understand what mobility really looks like in practice.</p>
 </div>
 
-<form id="form" novalidate>
+<form action="https://formspree.io/f/xnjgekbe" method="POST">
 
 <div class="block">
-<label for="q1">Which mobility did you take part in?</label>
+<label>Which mobility did you take part in?</label>
 <div class="hint">e.g. exchange visit with a partner school in Helsinki, 2025</div>
-<input id="q1" name="mobility" maxlength="120">
+<input type="text" name="mobility">
 </div>
 
 <div class="block">
-<label for="q2">What moment with students stayed with you most?</label>
-<textarea id="q2" name="moment" maxlength="1200"></textarea>
+<label>What moment with students stayed with you most?</label>
+<textarea name="moment" required></textarea>
 </div>
 
 <div class="block">
-<label for="q3">What would you say to a colleague unsure about proposing a mobility? (one sentence)</label>
-<textarea id="q3" name="advice" maxlength="400"></textarea>
+<label>What would you say to a colleague unsure about proposing a mobility? (one sentence)</label>
+<textarea name="advice" required></textarea>
 </div>
 
 <div class="block">
-<label for="q4">What surprised you in a difficult way — and how did it resolve?</label>
+<label>What surprised you in a difficult way — and how did it resolve?</label>
 <div class="hint">Small challenges are often the most useful to hear about.</div>
-<textarea id="q4" name="difficulty" maxlength="800"></textarea>
+<textarea name="difficulty"></textarea>
 </div>
 
 <div class="block">
-<label for="q5">Your name or initials</label>
+<label>Your name or initials</label>
 <div class="hint">Initials are completely fine.</div>
-<input id="q5" name="name" maxlength="60">
+<input type="text" name="name">
 </div>
 
-<input type="text" name="_hp" aria-hidden="true" tabindex="-1" autocomplete="off" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+<input type="hidden" name="_subject" value="New Erasmus Reflection">
+<input type="hidden" name="_next" value="https://justinsteinmetz.github.io/thankyou.html">
 
 <div class="consent">
-<input type="checkbox" id="consent">
-<label for="consent">I’m happy for my reflection to be used in internal Erasmus materials. I understand I can request removal at any time.</label>
+<input type="checkbox" required>
+<label>I’m happy for my reflection to be used in internal Erasmus materials.</label>
 </div>
 
 <div class="submit">
-<button id="btn">Send reflection</button>
+<button type="submit">Send reflection</button>
 </div>
-
-<div id="status" class="status" aria-live="polite"></div>
 
 </form>
 
-<div id="thanks" class="thankyou" tabindex="-1">
-<h2>Thank you.</h2>
-<p>This helps other teachers understand what mobility really looks like.</p>
 </div>
-
-</div>
-
-<script>
-const form = document.getElementById("form");
-const btn = document.getElementById("btn");
-const statusBox = document.getElementById("status");
-const thanks = document.getElementById("thanks");
-
-form.addEventListener("submit", async function(e){
- e.preventDefault();
-
- const q1 = document.getElementById("q1").value.trim();
- const q2 = document.getElementById("q2").value.trim();
- const q3 = document.getElementById("q3").value.trim();
- const q4 = document.getElementById("q4").value.trim();
- const q5 = document.getElementById("q5").value.trim();
- const consent = document.getElementById("consent").checked;
- const honeypot = form.querySelector('[name="_hp"]').value;
-
- if(honeypot) return;
-
- if(!consent){
-  showError("Please confirm consent before submitting.");
-  return;
- }
-
- if(!q2 && !q3){
-  showError("Please answer at least one reflection question.");
-  return;
- }
-
- btn.disabled = true;
- btn.classList.add("sending");
- btn.textContent = "Sending…";
-
- const controller = new AbortController();
- const timeout = setTimeout(()=>controller.abort(),10000);
-
- try{
-  const response = await fetch("https://formspree.io/f/xnjgekbe", {
-   method:"POST",
-   headers:{
-    "Accept":"application/json",
-    "Content-Type":"application/json"
-   },
-   body:JSON.stringify({
-    mobility:q1 || "—",
-    moment:q2 || "—",
-    advice:q3 || "—",
-    difficulty:q4 || "—",
-    name:q5 || "Anonymous",
-    submitted_at:new Date().toISOString()
-   }),
-   signal:controller.signal
-  });
-
-  clearTimeout(timeout);
-
-  const data = await response.json();
-  if(!response.ok || data.ok === false) throw new Error();
-
-  form.reset();
-  form.style.display = "none";
-  thanks.style.display = "block";
-  thanks.focus();
-
- }catch(err){
-  btn.disabled = false;
-  btn.classList.remove("sending");
-  btn.textContent = "Send reflection";
-
-  if(err.name === "AbortError"){
-   showError("Connection timed out. Please try again.");
-  } else {
-   showError("Submission failed. Please try again or email Justin.");
-  }
- }
-});
-
-function showError(msg){
- statusBox.textContent = msg;
- statusBox.style.display = "block";
-}
-</script>
 
 </body>
 </html>
