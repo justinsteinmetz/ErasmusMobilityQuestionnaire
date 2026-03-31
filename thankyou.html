@@ -2,44 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thank you — Erasmus+</title>
+<title>Done — Erasmus</title>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&family=DM+Mono&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
 <style>
 body{
  font-family:'DM Sans',sans-serif;
  background:#f7f5ef;
+ padding:40px;
  color:#0f0e0c;
- display:flex;
- align-items:center;
- justify-content:center;
- height:100vh;
- margin:0;
- text-align:center;
 }
+
+.container{max-width:700px;margin:auto;}
 
 h1{
  font-family:'Playfair Display',serif;
  font-style:italic;
- font-size:32px;
- margin-bottom:16px;
+ margin-bottom:10px;
 }
 
-p{
- font-size:16px;
- max-width:420px;
- line-height:1.6;
+.response{
+ background:#fff;
+ border:1px solid rgba(0,0,0,.1);
+ padding:20px;
+ font-family:'DM Mono',monospace;
+ margin:20px 0;
+ white-space:pre-wrap;
 }
+
+button{
+ width:100%;
+ padding:14px;
+ background:#c09a3a;
+ color:white;
+ border:none;
+ cursor:pointer;
+}
+
+.quote{
+ margin-top:30px;
+ font-style:italic;
+}
+
+.small{font-size:12px;color:#6f6c64;margin-top:10px;}
 </style>
 </head>
-<body>
 
-<div>
-<h1>Thank you.</h1>
-<p>Your reflection has been received. This helps colleagues understand what mobility really looks like in practice.</p>
+<body>
+<div class="container">
+
+<h1>Done.</h1>
+<p>Your response is ready to send.</p>
+
+<div id="text" class="response">
+Your reflection has been submitted.
+
+(Responses are sent directly to the Erasmus coordinators.)
 </div>
+
+<button onclick="copy()">Copy response</button>
+
+<div class="small">
+Paste into email → justin.steinmetz@dsp-praha.cz
+</div>
+
+<div class="quote">
+“It takes a lot of time and energy, but it’s worth it.”
+<br>— Sirina Agred
+</div>
+
+</div>
+
+<script>
+function copy(){
+ navigator.clipboard.writeText(document.getElementById('text').innerText);
+}
+</script>
 
 </body>
 </html>
