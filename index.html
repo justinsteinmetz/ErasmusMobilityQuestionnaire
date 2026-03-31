@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Erasmus+ Reflection — Deutsche Schule Prag</title>
+<title>Erasmus+ Reflection — DSP</title>
 
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
@@ -23,22 +23,14 @@
 
 *{box-sizing:border-box;margin:0;padding:0;}
 
-body{
- font-family:var(--sans);
- background:var(--paper);
- color:var(--ink);
-}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);}
 
-.container{
- max-width:720px;
- margin:auto;
-}
+.container{max-width:720px;margin:auto;}
 
 .header{
  background:var(--ink);
  padding:36px 24px 32px;
  position:relative;
- overflow:hidden;
 }
 
 .header-eyebrow{
@@ -61,18 +53,7 @@ body{
 .header p{
  font-size:13px;
  color:rgba(255,255,255,.6);
- line-height:1.6;
- max-width:360px;
-}
-
-.header-ghost{
- position:absolute;
- right:-18px;
- top:-12px;
- font-family:var(--serif);
- font-size:130px;
- font-style:italic;
- color:rgba(255,255,255,.03);
+ max-width:420px;
 }
 
 .block{
@@ -82,10 +63,10 @@ body{
 }
 
 label{
- display:block;
  font-weight:500;
  font-size:16px;
  margin-bottom:6px;
+ display:block;
 }
 
 .hint{
@@ -100,7 +81,6 @@ textarea,input{
  padding:12px;
  border:1px solid var(--rule);
  background:var(--paper);
- font-family:var(--sans);
  font-size:15px;
 }
 
@@ -119,9 +99,7 @@ textarea:focus,input:focus{
  gap:10px;
 }
 
-.submit{
- padding:24px;
-}
+.submit{padding:24px;}
 
 button{
  width:100%;
@@ -130,32 +108,30 @@ button{
  background:var(--ink);
  color:var(--white);
  text-transform:uppercase;
- font-size:14px;
  cursor:pointer;
 }
 </style>
 </head>
-<body>
 
+<body>
 <div class="container">
 
 <div class="header">
-<div class="header-ghost">Your words.</div>
 <div class="header-eyebrow">Erasmus+ · DSP</div>
-<h1>Tell us what you saw.</h1>
-<p>Your reflections help colleagues understand what mobility really looks like in practice.</p>
+<h1>What actually happened?</h1>
+<p>Write one or two moments you noticed — especially the ones you didn’t expect.</p>
 </div>
 
 <form action="https://formspree.io/f/xnjgekbe" method="POST">
 
 <div class="block">
-<label>Which mobility did you take part in?</label>
-<div class="hint">e.g. exchange visit with a partner school in Helsinki, 2025</div>
+<label>Where did you go, and with which students?</label>
 <input type="text" name="mobility">
 </div>
 
 <div class="block">
-<label>What moment with students stayed with you most?</label>
+<label>Describe one moment with students that stayed with you.</label>
+<div class="hint">Something small is often the most revealing.</div>
 <textarea name="moment" required></textarea>
 </div>
 
@@ -165,24 +141,22 @@ button{
 </div>
 
 <div class="block">
-<label>What surprised you in a difficult way — and how did it resolve?</label>
-<div class="hint">Small challenges are often the most useful to hear about.</div>
+<label>What was harder than you expected?</label>
+<div class="hint">And what actually helped in the moment.</div>
 <textarea name="difficulty"></textarea>
 </div>
 
 <div class="block">
 <label>Your name or initials</label>
-<div class="hint">Initials are completely fine.</div>
 <input type="text" name="name">
 </div>
 
 <input type="hidden" name="_subject" value="New Erasmus Reflection">
-
-<input type="hidden" name="_next" value="https://justinsteinmetz.github.io/ErasmusMobilityQuestionnaire/thankyou.html">
+<input type="hidden" name="_next" value="thankyou.html">
 
 <div class="consent">
 <input type="checkbox" required>
-<label>I’m happy for my reflection to be used in internal Erasmus materials.</label>
+<label>I’m happy for this to be used in Erasmus materials.</label>
 </div>
 
 <div class="submit">
@@ -192,6 +166,5 @@ button{
 </form>
 
 </div>
-
 </body>
 </html>
