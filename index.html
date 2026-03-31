@@ -2,169 +2,228 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Erasmus+ Reflection — DSP</title>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
- --ink:#0f0e0c;
- --ink-light:#6f6c64;
- --paper:#f7f5ef;
- --white:#ffffff;
- --gold:#c09a3a;
- --gold-pale:#f5edd8;
- --rule:rgba(15,14,12,.08);
- --sans:'DM Sans',sans-serif;
- --mono:'DM Mono',monospace;
- --serif:'Playfair Display',serif;
+:root {
+  --ink:#0f0e0c;--ink-mid:#3d3b36;--ink-light:#7a7870;--ink-faint:#c8c6be;
+  --paper:#f7f5ef;--white:#ffffff;--gold:#c09a3a;--gold-pale:#f5edd8;
+  --rule:rgba(15,14,12,0.08);
+  --sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--serif:'Instrument Serif',serif;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:var(--sans);background:var(--ink);color:var(--white);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
 
-*{box-sizing:border-box;margin:0;padding:0;}
+.progress-wrap{position:fixed;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.08);z-index:100;}
+.progress-fill{height:100%;background:var(--gold);transition:width 0.4s ease;}
 
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);}
+.screen{display:none;flex:1;flex-direction:column;justify-content:center;min-height:100vh;padding:80px 48px 60px;max-width:680px;margin:0 auto;width:100%;opacity:0;transform:translateY(16px);transition:opacity 0.4s ease,transform 0.4s ease;}
+.screen.active{display:flex;opacity:1;transform:translateY(0);}
+.screen.entering{opacity:0;transform:translateY(16px);}
 
-.container{max-width:720px;margin:auto;}
+.intro-eyebrow{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.intro-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold);}
+.intro-title{font-family:var(--serif);font-size:clamp(40px,6vw,64px);font-style:italic;font-weight:400;color:var(--white);line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px;}
+.intro-desc{font-size:16px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:480px;margin-bottom:16px;}
+.intro-primer{font-family:var(--serif);font-size:18px;font-style:italic;color:rgba(255,255,255,0.6);line-height:1.6;max-width:440px;margin-bottom:48px;padding-left:16px;border-left:2px solid rgba(192,154,58,0.35);}
 
-.header{
- background:var(--ink);
- padding:36px 24px 32px;
- position:relative;
-}
+.q-step{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0.8;}
+.q-prompt{font-family:var(--serif);font-size:clamp(28px,4vw,42px);font-style:italic;font-weight:400;color:var(--white);line-height:1.2;letter-spacing:-0.01em;margin-bottom:12px;}
+.q-subprompt{font-size:14px;color:rgba(255,255,255,0.38);line-height:1.6;margin-bottom:32px;font-style:italic;max-width:400px;}
+.optional-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-bottom:28px;display:block;}
 
-.header-eyebrow{
- font-family:var(--mono);
- font-size:9px;
- letter-spacing:.18em;
- text-transform:uppercase;
- color:var(--gold);
- margin-bottom:12px;
-}
+textarea,input[type="text"]{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.15);color:var(--white);font-family:var(--sans);font-size:16px;line-height:1.65;padding:16px 0;resize:none;transition:border-color 0.2s;-webkit-appearance:none;}
+textarea:focus,input[type="text"]:focus{outline:none;border-bottom-color:var(--gold);}
+textarea::placeholder,input[type="text"]::placeholder{color:rgba(255,255,255,0.18);font-style:italic;}
+textarea{min-height:120px;}
 
-.header h1{
- font-family:var(--serif);
- font-size:28px;
- font-style:italic;
- color:var(--white);
- margin-bottom:12px;
-}
+.consent-wrap{display:flex;align-items:flex-start;gap:14px;margin-bottom:36px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);}
+.consent-wrap input[type="checkbox"]{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--gold);cursor:pointer;}
+.consent-wrap label{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;cursor:pointer;}
 
-.header p{
- font-size:13px;
- color:rgba(255,255,255,.6);
- max-width:420px;
-}
+.nav-row{display:flex;align-items:center;justify-content:space-between;margin-top:40px;gap:16px;}
+.btn-next{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--gold);color:var(--ink);border:none;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.15s;-webkit-appearance:none;}
+.btn-next:hover{background:#d4ae4e;}
+.btn-next svg{width:14px;height:14px;flex-shrink:0;}
+.btn-back{background:none;border:none;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.22);cursor:pointer;padding:0;transition:color 0.15s;}
+.btn-back:hover{color:rgba(255,255,255,0.45);}
+.btn-skip{background:none;border:none;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.18);cursor:pointer;padding:0;transition:color 0.15s;margin-right:auto;}
+.btn-skip:hover{color:rgba(255,255,255,0.38);}
 
-.block{
- background:var(--white);
- border-bottom:1px solid var(--rule);
- padding:26px 24px;
-}
+.btn-submit{display:flex;align-items:center;justify-content:center;width:100%;padding:16px 36px;background:var(--gold);color:var(--ink);border:none;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.15s;-webkit-appearance:none;margin-top:8px;}
+.btn-submit:hover{background:#d4ae4e;}
+.btn-submit:disabled{opacity:0.5;cursor:default;}
 
-label{
- font-weight:500;
- font-size:16px;
- margin-bottom:6px;
- display:block;
-}
+.thankyou-mark{font-family:var(--serif);font-size:72px;font-style:italic;color:var(--gold);line-height:1;margin-bottom:28px;opacity:0.55;}
+.thankyou-title{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-style:italic;color:var(--white);line-height:1.1;margin-bottom:20px;letter-spacing:-0.02em;}
+.thankyou-desc{font-size:16px;color:rgba(255,255,255,0.48);line-height:1.75;max-width:420px;margin-bottom:48px;}
+.thankyou-quote{font-family:var(--serif);font-size:20px;font-style:italic;color:rgba(255,255,255,0.32);line-height:1.55;max-width:400px;padding-left:16px;border-left:2px solid rgba(192,154,58,0.25);}
 
-.hint{
- font-size:12px;
- color:var(--ink-light);
- font-style:italic;
- margin-bottom:12px;
-}
+.keyboard-hint{position:fixed;bottom:24px;right:24px;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.14);}
+.keyboard-hint kbd{background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:2px;font-family:var(--mono);}
 
-textarea,input{
- width:100%;
- padding:12px;
- border:1px solid var(--rule);
- background:var(--paper);
- font-size:15px;
-}
-
-textarea:focus,input:focus{
- outline:none;
- border-color:var(--gold);
- box-shadow:0 0 0 3px rgba(192,154,58,.12);
-}
-
-.consent{
- background:var(--gold-pale);
- border-left:3px solid var(--gold);
- padding:18px 24px;
- font-size:13px;
- display:flex;
- gap:10px;
-}
-
-.submit{padding:24px;}
-
-button{
- width:100%;
- padding:16px;
- border:none;
- background:var(--ink);
- color:var(--white);
- text-transform:uppercase;
- cursor:pointer;
-}
+@media(max-width:600px){.screen{padding:72px 28px 48px;}.keyboard-hint{display:none;}}
 </style>
 </head>
-
 <body>
-<div class="container">
 
-<div class="header">
-<div class="header-eyebrow">Erasmus+ · DSP</div>
-<h1>What actually happened?</h1>
-<p>Write one or two moments you noticed — especially the ones you didn’t expect.</p>
+<div class="progress-wrap"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+<!-- SCREEN 0: INTRO -->
+<div class="screen active" id="screen-0">
+  <div class="intro-eyebrow">Erasmus+ · Deutsche Schule Prag</div>
+  <h1 class="intro-title">What actually<br>happened?</h1>
+  <p class="intro-desc">Five questions. No right answers. Your account of a mobility matters more to other teachers than any document we could write.</p>
+  <p class="intro-primer">Before you start — think of one specific moment from the trip. A student's face, something said, a place. Hold that in mind as you write.</p>
+  <div class="nav-row" style="justify-content:flex-start;margin-top:0;">
+    <button class="btn-next" onclick="goTo(1)">Begin <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
 </div>
 
-<form action="https://formspree.io/f/xnjgekbe" method="POST">
-
-<div class="block">
-<label>Where did you go, and with which students?</label>
-<input type="text" name="mobility">
+<!-- SCREEN 1 -->
+<div class="screen" id="screen-1">
+  <div class="q-step">Question 1 of 5</div>
+  <h2 class="q-prompt">Where did you go,<br>and with whom?</h2>
+  <p class="q-subprompt">School, city, year group — whatever gives it context.</p>
+  <input type="text" id="q-mobility" placeholder="e.g. exchange with a school in Helsinki, Year 9, 2025">
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(0)">← Back</button>
+    <button class="btn-next" onclick="goTo(2)">Continue <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
 </div>
 
-<div class="block">
-<label>Describe one moment with students that stayed with you.</label>
-<div class="hint">Something small is often the most revealing.</div>
-<textarea name="moment" required></textarea>
+<!-- SCREEN 2 -->
+<div class="screen" id="screen-2">
+  <div class="q-step">Question 2 of 5</div>
+  <h2 class="q-prompt">Describe one moment<br>that stayed with you.</h2>
+  <p class="q-subprompt">Something small is often the most revealing. Concrete and specific is better than general.</p>
+  <textarea id="q-moment" placeholder="Write freely — this doesn't need to be polished."></textarea>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(1)">← Back</button>
+    <button class="btn-next" onclick="goTo(3)">Continue <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
 </div>
 
-<div class="block">
-<label>What would you say to a colleague unsure about proposing a mobility?</label>
-<textarea name="advice" required></textarea>
+<!-- SCREEN 3 -->
+<div class="screen" id="screen-3">
+  <div class="q-step">Question 3 of 5</div>
+  <h2 class="q-prompt">What would you say to a colleague<br>on the fence?</h2>
+  <p class="q-subprompt">The one thing you'd want them to know.</p>
+  <textarea id="q-advice" placeholder=""></textarea>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(2)">← Back</button>
+    <button class="btn-next" onclick="goTo(4)">Continue <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
 </div>
 
-<div class="block">
-<label>What was harder than you expected?</label>
-<div class="hint">And what actually helped in the moment.</div>
-<textarea name="difficulty"></textarea>
+<!-- SCREEN 4 -->
+<div class="screen" id="screen-4">
+  <div class="q-step">Question 4 of 5</div>
+  <h2 class="q-prompt">What was harder<br>than you expected?</h2>
+  <p class="q-subprompt">And what actually helped in the moment. Honest is more useful than reassuring.</p>
+  <span class="optional-tag">Optional — but the most useful answers for other teachers</span>
+  <textarea id="q-difficulty" placeholder="You can leave this blank if nothing comes to mind."></textarea>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(3)">← Back</button>
+    <button class="btn-skip" onclick="goTo(5)">Skip</button>
+    <button class="btn-next" onclick="goTo(5)">Continue <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
 </div>
 
-<div class="block">
-<label>Your name or initials</label>
-<input type="text" name="name">
+<!-- SCREEN 5: NAME + CONSENT + SUBMIT -->
+<div class="screen" id="screen-5">
+  <div class="q-step">Question 5 of 5</div>
+  <h2 class="q-prompt">Your name<br>or initials.</h2>
+  <p class="q-subprompt">Used for attribution. Initials are completely fine.</p>
+  <input type="text" id="q-name" placeholder="e.g. S. Agred, or just your first name" style="margin-bottom:40px;">
+  <div class="consent-wrap">
+    <input type="checkbox" id="consent">
+    <label for="consent">I'm happy for this reflection to be used — in whole or edited — in DSP's internal Erasmus materials. I can ask to have it removed at any time.</label>
+  </div>
+  <button class="btn-submit" id="btn-submit" onclick="handleSubmit()">Send reflection</button>
+  <div class="nav-row" style="margin-top:16px;justify-content:flex-start;">
+    <button class="btn-back" onclick="goTo(4)">← Back</button>
+  </div>
 </div>
 
-<input type="hidden" name="_subject" value="New Erasmus Reflection">
-<input type="hidden" name="_next" value="thankyou.html">
-
-<div class="consent">
-<input type="checkbox" required>
-<label>I’m happy for this to be used in Erasmus materials.</label>
+<!-- SCREEN 6: THANK YOU -->
+<div class="screen" id="screen-6">
+  <div class="thankyou-mark">✦</div>
+  <h2 class="thankyou-title">Thank you.</h2>
+  <p class="thankyou-desc">Your reflection has been sent. Klára and Justin will read it. What you wrote will help teachers who haven't gone yet understand what a mobility actually is.</p>
+  <p class="thankyou-quote">"It takes a lot of time and energy, but it's worth it."<span style="font-family:var(--mono);font-size:10px;font-style:normal;color:rgba(255,255,255,0.22);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-top:12px;">Sirina Agred · French teacher · Marseille 2026</span></p>
 </div>
 
-<div class="submit">
-<button type="submit">Send reflection</button>
-</div>
+<div class="keyboard-hint" id="keyboard-hint">Press <kbd>Enter</kbd> to continue</div>
 
-</form>
+<script>
+let current = 0;
 
-</div>
+function goTo(n) {
+  const from = document.getElementById('screen-' + current);
+  const to   = document.getElementById('screen-' + n);
+  if (!to) return;
+  from.classList.remove('active');
+  from.style.display = 'none';
+  to.style.display = 'flex';
+  to.classList.add('entering');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    to.classList.remove('entering');
+    to.classList.add('active');
+  }));
+  current = n;
+  const pct = n === 0 ? 0 : n >= 6 ? 100 : (n / 5) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('keyboard-hint').style.display = n >= 5 ? 'none' : 'block';
+  setTimeout(() => {
+    const inp = to.querySelector('textarea, input[type="text"]');
+    if (inp) inp.focus();
+  }, 420);
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter' || e.shiftKey) return;
+  const active = document.querySelector('.screen.active');
+  if (!active) return;
+  const ta = active.querySelector('textarea');
+  if (ta && document.activeElement === ta) return;
+  const btn = active.querySelector('.btn-next');
+  if (btn) { e.preventDefault(); btn.click(); }
+});
+
+async function handleSubmit() {
+  const consent = document.getElementById('consent').checked;
+  if (!consent) { document.getElementById('consent').focus(); return; }
+  const moment = document.getElementById('q-moment').value.trim();
+  const advice = document.getElementById('q-advice').value.trim();
+  if (!moment && !advice) { goTo(2); return; }
+  const btn = document.getElementById('btn-submit');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://formspree.io/f/xnjgekbe', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mobility:   document.getElementById('q-mobility').value.trim() || '—',
+        moment:     moment || '—',
+        advice:     advice || '—',
+        difficulty: document.getElementById('q-difficulty').value.trim() || '—',
+        name:       document.getElementById('q-name').value.trim() || 'Anonymous',
+        consent:    'Given'
+      })
+    });
+    if (res.ok) { goTo(6); }
+    else { throw new Error(); }
+  } catch(e) {
+    btn.textContent = 'Send reflection';
+    btn.disabled = false;
+    alert('Something went wrong — please try again or email justin.steinmetz@dsp-praha.cz directly.');
+  }
+}
+</script>
 </body>
 </html>
